@@ -82,17 +82,65 @@ app.use('*', (req, res) => {
 });
 
 // DB Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/ghorerbazar')
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://sharifur:<sharifur_rahman>@cluster0.zugruoh.mongodb.net/?appName=Cluster0')
   .then(() => {
     console.log('✅ MongoDB Connected');
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-    });
   })
   .catch(err => {
     console.error('❌ MongoDB connection error:', err);
-    process.exit(1);
   });
 
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
+}
+
+// Export for Vercel serverless
 module.exports = app;
+```
+
+6. Click **"Commit changes"**
+
+---
+
+### Step 3 — Check Your Environment Variables on Vercel
+
+1. Go to **vercel.com** → click your **backend project**
+2. Go to **Settings** → **Environment Variables**
+3. Make sure ALL of these exist:
+
+| NAME | VALUE |
+|------|-------|
+| `MONGODB_URI` | `mongodb+srv://user:pass@cluster.mongodb.net/ghorerbazar` |
+| `JWT_SECRET` | `ghorerbazar_secret_key_2024` |
+| `JWT_EXPIRE` | `7d` |
+| `NODE_ENV` | `production` |
+| `FRONTEND_URL` | `https://your-frontend.vercel.app` |
+| `ADMIN_EMAIL` | `admin@ghorerbazar.com` |
+| `ADMIN_PASSWORD` | `Admin@123` |
+| `SEED_SECRET` | `myseedkey123` |
+
+> ⚠️ If `MONGODB_URI` is wrong or missing, you'll get NOT_FOUND or 500 errors
+
+---
+
+### Step 4 — Redeploy the Backend
+
+1. Vercel → backend project → **"Deployments"** tab
+2. Click the **three dots `...`** on the latest deployment
+3. Click **"Redeploy"**
+4. Wait 1-2 minutes
+
+---
+
+### Step 5 — Test Your Backend is Working
+
+Once redeployed, open your browser and visit these URLs one by one:
+
+**Test 1 — Health check:**
+```
+https://your-backend.vercel.app/api/health
