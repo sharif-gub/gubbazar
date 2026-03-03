@@ -40,6 +40,27 @@ app.use('/api/cart', require('./routes/cart'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/upload', require('./routes/upload'));
+app.use('/api/seed', require('./routes/seed'));
+```
+5. Click **"Commit changes"**
+
+### Step 3 — Add SEED_SECRET to Vercel
+
+1. Go to Vercel → your **backend project** → **Settings** → **Environment Variables**
+2. Add:
+
+| NAME | VALUE |
+|------|-------|
+| `SEED_SECRET` | `myseedkey123` |
+
+3. Click **Save** → Go to **Deployments** → **Redeploy**
+
+### Step 4 — Run the Seed by Visiting a URL
+
+Once redeployed, open your browser and visit:
+```
+https://your-backend.vercel.app/api/seed/run?secret=myseedkey123
+
 
 // Health check
 app.get('/api/health', (req, res) => {
