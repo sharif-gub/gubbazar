@@ -83,7 +83,7 @@ app.use('*', (req, res) => {
 
 // DB Connection
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://sharifur:<sharifur_rahman>@cluster0.zugruoh.mongodb.net/?appName=Cluster0')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://sharifur:<gubcse>@cluster0.zugruoh.mongodb.net/?appName=Cluster0')
   .then(() => {
     console.log('✅ MongoDB Connected');
   })
